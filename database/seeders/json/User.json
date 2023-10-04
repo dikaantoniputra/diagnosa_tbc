@@ -1,0 +1,13 @@
+[
+    {
+        "name": "Admin",
+        "email": "admin@gmail.com",
+        "password": "admin",
+        "slug": "admin",
+        "address": "Admin Address",
+        "phone": "1234567890",
+        "username": "admin",
+        "role": "admin",
+        "status": 1
+    }
+]
