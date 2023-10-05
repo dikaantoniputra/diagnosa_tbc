@@ -1,9 +1,17 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserControler;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RelasiController;
+use App\Http\Controllers\GejalaController;
+use App\Http\Controllers\TKController;
+use App\Http\Controllers\DiagnosaController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PKController;
+use App\Http\Controllers\UserController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,31 +24,30 @@ use App\Http\Controllers\HomeController;
 */
 
 
-Route::get('/login', [AuthController::class, 'index'])->name('login')->middleware('guest');
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout']);
 
-Route::group(['prefix' => 'admin', 'middleware' => ['guest']], function () { 
+Route::resource('/', HomeController::class);
+Route::resource('daftar', RegisterController::class);
+Route::post('daftar', [RegisterController::class, 'store']);
 
-    Route::get('/', function () {      
-        return view('admin.page.index');
-    })->name('admin.dashboard');
+Route::resource('masuk', LoginController::class);
+Route::post('masuk', [LoginController::class, 'authenticate']);
 
-    Route::resource('user', UserControler::class);
+Route::get('keluar', [LoginController::class, 'logout']);
+Route::get('daftar-gejala', [GejalaController::class, 'daftar']);
+Route::get('daftar-penyakit', [TKController::class, 'daftar']);
+Route::get('tentang', [HomeController::class, 'tentang'])->name('home.tentang');
 
 
+Route::middleware(['add.user.data'])->group(function () {
+    Route::resource('/dashboard', DashboardController::class)->middleware('auth');
+    Route::resource('relasi', RelasiController::class)->middleware('admin');
+    
+    Route::resource('pohon-keputusan', PKController::class)->middleware('admin');
+    Route::resource('gejala', GejalaController::class)->middleware('admin');
+    Route::resource('tumbuh-kembang', TKController::class)->middleware('admin');
+    Route::resource('diagnosa', DiagnosaController::class)->middleware('auth');
+    Route::resource('user-list', UserController::class)->middleware('admin');
+    Route::match(['get', 'post'], 'diagnosa/hasil', [DiagnosaController::class, 'hasil'])->name('diagnosa.hasil');
+    
+    Route::get('history', [DiagnosaController::class, 'showDiagnosa'])->name('diagnosa.showDiagnosa')->middleware('auth');
 });
-
-Route::group(['middleware' => ['auth', 'role:admin']], function () {
-    Route::get('/admin', function () {
-        
-    return view('page.index');
-    })->name('admin.dashboard');
-
-});
-
-Route::get('/', [HomeController::class, 'index'])->name('index')->middleware('guest');
-
-
-Route::get('/pelajaran', [PelajaranController::class, 'index'])->name('pelajaran.index');
-Route::resource('pelajaran', PelajaranController::class);
