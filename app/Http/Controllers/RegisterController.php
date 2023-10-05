@@ -17,7 +17,7 @@ class RegisterController extends Controller
     {
         $data = [
             'title' => 'PENDAFTARAN',
-            'subtitle' => 'Sistem Pakar Tumbuh Kembang Balita',
+            'subtitle' => 'Sistem Pakar Kategori Penyakit TBC',
         ];
         return view('register', $data);
     }

@@ -16,7 +16,7 @@ class TKController extends Controller
     {
         $data = [
             'title' => 'Tumbuh Kembang',
-            'subtitle' => 'Halaman yang berisikan daftar data tumbuh kembang',
+            'subtitle' => 'Halaman yang berisikan daftar data Kategori Penyakit',
             'isi' => TKModel::all(),
         ];
         return view('t-k.index', $data);
@@ -29,8 +29,8 @@ class TKController extends Controller
     public function daftar()
     {
         $data = [
-            'title' => 'Daftar Tumbuh Kembang',
-            'subtitle' => 'Halaman yang berisikan daftar data tumbuh kembang yang tersimpan',
+            'title' => 'Daftar Kategori Penyakit',
+            'subtitle' => 'Halaman yang berisikan daftar data Kategori Penyakit yang tersimpan',
             'isi' => TKModel::all(),
         ];
         return view('daftarPenyakit', $data);
@@ -98,8 +98,8 @@ class TKController extends Controller
         $penyakit = TKModel::all()->find($id);
 
         $data = [
-            'title' => 'Edit Tumbuh Kembang',
-            'subtitle' => 'Data Tumbuh Kembang',
+            'title' => 'Edit Kategori Penyakit',
+            'subtitle' => 'Data Kategori Penyakit',
             'isi' => $penyakit,
         ];
 

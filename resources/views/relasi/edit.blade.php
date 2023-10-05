@@ -39,7 +39,7 @@
                                     @method('PUT')
                                     <div class="row">
                                         <div class="col-md-4 mb-4">
-                                            <p>Nama Tumbuh Kembang</p>
+                                            <p>Nama Kategori Penyakit</p>
                                         </div>
                                         <div class="col-md-8 mb-4">
                                             <select class="form-select" name="relasi_penyakit">

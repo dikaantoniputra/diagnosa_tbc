@@ -31,7 +31,7 @@ class RelasiController extends Controller
         // }
         // $data=[
         //     'title' => 'Basis Pengetahuan',
-        //     'subtitle' => 'Halaman berisikan pengetahuan hubungan antara tumbuh kembang dan gejala',
+        //     'subtitle' => 'Halaman berisikan pengetahuan hubungan antara Kategori Penyakit dan gejala',
         //     'data' => $hasil,
         //     'penyakit' => TKModel::all(),
         //     'gejala' => Gejala::all(),
@@ -62,7 +62,7 @@ class RelasiController extends Controller
 
         $data = [
             'title' => 'Basis Pengetahuan',
-            'subtitle' => 'Halaman berisikan pengetahuan hubungan antara tumbuh kembang dan gejala',
+            'subtitle' => 'Halaman berisikan pengetahuan hubungan antara Kategori Penyakit dan gejala',
             'data' => array_values($hasil),
             'penyakit' => TKModel::all(),
             'gejala' => Gejala::all(),

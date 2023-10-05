@@ -49,9 +49,9 @@
                                 <div class="modal-body">
 
                                     <div class="mb-3 mt-3">
-                                        <p>Nama Tumbuh Kembang</p>
+                                        <p>Nama Kategori Penyakit</p>
                                         <select class="choices form-select" name="relasi_penyakit">
-                                            <option value="">Pilih Tumbuh Kembang</option>
+                                            <option value="">Pilih Kategori Penyakit</option>
                                             @foreach ($daftar as $p)
                                                 <option value="{{ $p->id }}">
                                                     {{ $p->kode }} - {{ $p->nama_penyakit }}

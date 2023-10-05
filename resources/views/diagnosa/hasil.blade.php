@@ -127,7 +127,7 @@
             Swal.fire({
                 icon: 'success',
                 title: 'Berhasil',
-                text: 'Gangguan tumbuh kembang ditemukan!',
+                text: 'Gangguan Kategori Penyakit ditemukan!',
             })
 
         </script>

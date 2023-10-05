@@ -49,7 +49,7 @@
                                     </div>
                                     <div class="col-md-6 col-12">
                                         <div class="form-group">
-                                            <label for="nama_penyakit" class="col-sm-5 col-form-label">Nama Tumbuh Kembang</label>
+                                            <label for="nama_penyakit" class="col-sm-5 col-form-label">Nama Kategori Penyakit</label>
                                             <input type="text" class="form-control" id="nama_penyakit" name="nama_penyakit"
                                             value="{{ $isi->nama_penyakit }}" placeholder="Nama Penyakit" data-parsley-required="true" data-parsley-required-message="Nama tidak boleh kosong">
                                         @error('nama_penyakit')

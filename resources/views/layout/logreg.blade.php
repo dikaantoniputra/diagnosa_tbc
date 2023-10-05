@@ -55,7 +55,7 @@
                                         </li>
                                         <li class="menu-item has-sub">
                                             <a href="#" class='menu-link'>
-                                                <span class="fw-bold">Data Tumbuh Kembang</span>
+                                                <span class="fw-bold">Data Kategori Penyakit</span>
                                             </a>
                                             <div class="submenu ">
                                                 <!-- Wrap to submenu-group-wrapper if you want 3-level submenu. Otherwise remove it. -->

@@ -38,7 +38,7 @@
                         </div>
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Informasi Tumbuh Kembang</h4>
+                                <h4 class="card-title">Informasi Kategori Penyakit</h4>
                             </div>
                             <div class="card-body">
                                 {{-- content --}}

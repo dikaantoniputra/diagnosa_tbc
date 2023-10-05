@@ -47,17 +47,17 @@
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Jumlah Tumbuh Kembang</h4>
+                                <h4 class="card-title">Jumlah Kategori Penyakit</h4>
                             </div>
                             <div class="card-body">
-                                {{-- content --}}
+                                {{-- content --}}<span class="st-icon-search"></span>
                                 <div class="row">
                                     <div class="d-flex align-items-center justify-content-around">
                                         <img src="{{ asset('dist/assets/images/samples/2.png') }}"
                                             class="col-lg-6 col-md-6 col-6"></img>
                                         <div class="col-lg-4 col-md-4 col-4 text-center">
                                             <div class="value" akhi="{{ $penyakit }}">0</div>
-                                            <h5>Tumbuh Kembang</h5>
+                                            <h5>Penyakit TBC</h5>
                                         </div>
                                     </div>
                                 </div>
@@ -131,7 +131,7 @@
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Jumlah Tumbuh Kembang</h4>
+                                <h4 class="card-title">Jumlah Kategori Penyakit</h4>
                             </div>
                             <div class="card-body">
                                 {{-- content --}}

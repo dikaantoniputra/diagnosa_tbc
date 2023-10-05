@@ -21,7 +21,7 @@
                 <h1><strong>SIPADTBC</strong></h1>
             </div>
             <div class="col-md-6">
-                <h4 class="text-end">Sistem Pakar Diagnosa Tumbuh Kembang</h4>
+                <h4 class="text-end">Sistem Pakar Diagnosa Kategori Penyakit</h4>
                 <p class="fs-6 text-end m-0">Alamat</p>
                 <p class="fs-6 text-end m-0">No Telepon</p>
                 <p class="fs-6 text-end m-0">Email</p>

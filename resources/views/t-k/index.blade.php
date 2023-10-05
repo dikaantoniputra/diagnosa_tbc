@@ -48,7 +48,7 @@
                                 </button>
                             </div>
                             <div class="">
-                                <h5 class="modal-title text-center">Input Tumbuh Kembang</h5>
+                                <h5 class="modal-title text-center">Input Kategori Penyakit</h5>
                             </div>
                             <div class="modal-body">
                                 <form action="{{ route('tumbuh-kembang.store') }}" method="POST">
@@ -57,7 +57,7 @@
                                         <label for="kode" class="col-sm-2 col-form-label">Kode</label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="kode" name="kode"
-                                                placeholder="Kode Tumbuh Kembang" value="{{ old('kode') }}">
+                                                placeholder="Kode Kategori Penyakit" value="{{ old('kode') }}">
                                             @error('kode')
                                                 <div class="alert alert-danger">{{ $message }}</div>
                                             @enderror
@@ -68,7 +68,7 @@
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="nama_penyakit"
                                                 name="nama_penyakit" value="{{ old('nama_penyakit') }}"
-                                                placeholder="Nama Tumbuh Kembang">
+                                                placeholder="Nama Kategori Penyakit">
                                             @error('nama_penyakit')
                                                 <div class="alert alert-danger">{{ $message }}</div>
                                             @enderror

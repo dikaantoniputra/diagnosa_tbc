@@ -49,7 +49,7 @@
                         <li class="sidebar-item  ">
                             <a href="{{route('tumbuh-kembang.index')}}" class='sidebar-link'>
                                 <i class="fa-fw select-all fas"></i>
-                                <span>Tumbuh Kembang</span>
+                                <span>Penyakit TBC</span>
                             </a>
                         </li>
                         <li class="sidebar-item  ">
