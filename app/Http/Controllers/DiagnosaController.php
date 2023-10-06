@@ -69,8 +69,9 @@ class DiagnosaController extends Controller
             if (!$visited[$next_gejala_id]) {
                 $this->dfsDiagnosis($next_gejala_id, $visited, $result, $gejala_importance);
             }
-        }
+        };
     }
+    
 
     public function hasil(Request $request)
     {
@@ -80,12 +81,12 @@ class DiagnosaController extends Controller
             'alamat' => 'required|string',
             'telp' => 'required|numeric',
         ]);
-
+    
         // Ambil semua data relasi gejala dan penyakit
         $gejala_input = $request->input('gejala');
         $gejala_ids = Gejala::whereIn('id', $gejala_input)->pluck('id')->toArray();
         $penyakit = TKModel::all();
-
+    
         // Calculate the importance count of each symptom
         $gejala_importance = array_fill_keys($gejala_ids, 0);
         foreach ($gejala_ids as $gejala_id) {
@@ -95,14 +96,14 @@ class DiagnosaController extends Controller
             // Replace 'importance' with the correct field name in your setup
             $gejala_importance[$gejala_id] = Gejala::find($gejala_id)->penting;
         }
-
+    
         // Perform DFS to find diseases based on symptoms
         $visited = array_fill_keys($gejala_ids, false);
         $hasil = [];
         foreach ($gejala_ids as $gejala_id) {
             $this->dfsDiagnosis($gejala_id, $visited, $hasil, $gejala_importance);
         }
-
+    
         // Sort the diseases based on both symptom count and symptom importance
         usort($hasil, function ($a, $b) {
             if ($a['penting'] !== $b['penting']) {
@@ -110,9 +111,9 @@ class DiagnosaController extends Controller
             }
             return $b['count'] - $a['count'];
         });
-
+    
         $penyakit_hasil = array_column($hasil, 'penyakit');
-
+    
         $data = [
             'title' => 'Hasil Diagnosa',
             'pasien' => $request->input('nama_pasien'),
@@ -122,12 +123,17 @@ class DiagnosaController extends Controller
             'gejala' => $request->input('gejala'),
             'hasil' => $penyakit_hasil,
         ];
-
-        // dd($data);
-
+    
+        // Only keep the first result
+        if (!empty($penyakit_hasil)) {
+            $data['hasil'] = [$penyakit_hasil[0]];
+        } else {
+            $data['hasil'] = [];
+        }
+    
         return view('diagnosa/hasil', $data)->with('success', 'Penyakit berhasil ditemukan!');
-        
     }
+    
 
 
 
