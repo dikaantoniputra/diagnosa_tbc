@@ -53,7 +53,7 @@
                                         <select class="choices form-select" name="relasi_penyakit">
                                             <option value="">Pilih Kategori Penyakit</option>
                                             @foreach ($daftar as $p)
-                                                <option value="{{ $p->id }}">
+                                                <option value="{{ $p->kode }}">
                                                     {{ $p->kode }} - {{ $p->nama_penyakit }}
                                                 </option>
                                             @endforeach
@@ -65,7 +65,7 @@
                                             multiple="multiple">
                                             <option value="">Pilih Gejala</option>
                                             @foreach ($gejala as $g)
-                                                <option value="{{ $g->id }}">
+                                                <option value="{{ $g->kode_gejala }}">
                                                     {{ $g->kode_gejala }} - {{ $g->nama_gejala }}
                                                 </option>
                                             @endforeach
@@ -93,7 +93,7 @@
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
-                                <th class="text-center">KD-Nama TK</th>
+                                <th class="text-center">KD-Nama Penyakit</th>
                                 <th class="text-center">Gejala</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
@@ -146,7 +146,7 @@
 @endsection
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @if (session()->has('success'))
         <script>
             Swal.fire({

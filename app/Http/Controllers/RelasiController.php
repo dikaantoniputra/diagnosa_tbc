@@ -16,44 +16,23 @@ class RelasiController extends Controller
      */
     public function index()
     {
-        //         $relasi = Relasi::all();
-        // $data = [];
-        // foreach($relasi as $r){
-        //     $penyakit = TKModel::where('id', $r->penyakit_id)->first();
-        //     $gejala = Gejala::where('id', $r->gejala_id)->first();
-        //     $hasil[] = [
-        //         'id' => $penyakit->id,
-        //         'kode' => $penyakit->kode,
-        //         'nama_penyakit' => $penyakit->nama_penyakit,
-        //         'gejala_id' => $gejala->id,
-        //         'nama_gejala' => $gejala->nama_gejala,
-        //     ];
-        // }
-        // $data=[
-        //     'title' => 'Basis Pengetahuan',
-        //     'subtitle' => 'Halaman berisikan pengetahuan hubungan antara Kategori Penyakit dan gejala',
-        //     'data' => $hasil,
-        //     'penyakit' => TKModel::all(),
-        //     'gejala' => Gejala::all(),
-        // ];
-
         $relasi = Relasi::all();
         $data = [];
         foreach ($relasi as $r) {
-            $penyakit = TKModel::where('id', $r->penyakit_id)->first();
-            $gejala = Gejala::where('id', $r->gejala_id)->first();
-            if (!isset($hasil[$penyakit->id])) {
-                $hasil[$penyakit->id] = [
+            $penyakit = TKModel::where('kode', $r->kode_penyakit)->first();
+            $gejala = Gejala::where('kode_gejala', $r->kode_gejala)->first();
+            if (!isset($hasil[$penyakit->kode])) {
+                $hasil[$penyakit->kode] = [
                     'id' => $penyakit->id,
                     'kode' => $penyakit->kode,
                     'nama_penyakit' => $penyakit->nama_penyakit,
                     'gejala' => [],
-                ];
+                ];   
             }
-            $hasil[$penyakit->id]['gejala'][] = $gejala->nama_gejala;
+            $hasil[$penyakit->kode]['gejala'][] = $gejala->nama_gejala;
         }
 
-        $used_ids = Relasi::pluck('penyakit_id')->toArray();
+        $used_ids = Relasi::pluck('kode_penyakit')->toArray();
         $penyakits = TKModel::whereNotIn('id', $used_ids)->get();
 
         if (empty($hasil)) {
@@ -94,14 +73,14 @@ class RelasiController extends Controller
             'relasi_penyakit' => 'required',
             'relasi_gejala' => 'required',
         ]);
-
-        // dd($request);
+        
+    
         $countGejala = count($request->relasi_gejala);
 
         for ($i = 0; $i < $countGejala; $i++) {
             $relasi = new Relasi();
-            $relasi->gejala_id = $request->relasi_gejala[$i];
-            $relasi->penyakit_id = $request->relasi_penyakit;
+            $relasi->kode_gejala = $request->relasi_gejala[$i];
+            $relasi->kode_penyakit = $request->relasi_penyakit;
             $relasi->save();
         }
 
@@ -133,9 +112,10 @@ class RelasiController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
+    {   
+        dd(Relasi::where('kode_penyakit', $id)->get());
         // mengambil data relasi berdasarkan penyakit_id
-        $relasi = Relasi::where('penyakit_id', $id)->get();
+        $relasi = Relasi::where('id', $id)->get();
         $gejalaIDs = $relasi->pluck('gejala_id')->toArray(); // Mengambil semua gejala_id yang terkait
 
         $penyakit = TKModel::all();
@@ -168,7 +148,7 @@ class RelasiController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'relasi_penyakit' => 'required|integer',
+            'relasi_penyakit' => 'required',
             'relasi_gejala' => 'required|array',
         ]);
 
@@ -182,8 +162,8 @@ class RelasiController extends Controller
         $relasi->save();
 
         // Get the current gejala_ids associated with the relationship
-        $current_gejala_ids = Relasi::where('penyakit_id', $id)->pluck('gejala_id')->toArray();
-        // dd($current_gejala_ids);
+        $current_gejala_ids = Relasi::where('kode_penyakit', $id)->pluck('kode_gejala')->toArray();
+        dd($current_gejala_ids);
 
         // Loop through provided gejala_ids and update the relationship
         foreach ($gejala_ids as $gejala_id) {
@@ -194,8 +174,8 @@ class RelasiController extends Controller
 
             // If the gejala_id is not associated, create a new Relasi row
             $newRelasi = new Relasi();
-            $newRelasi->gejala_id = $gejala_id;
-            $newRelasi->penyakit_id = $penyakit_id;
+            $newRelasi->kode_gejala = $gejala_id;
+            $newRelasi->kode_penyakit = $penyakit_id;
             $newRelasi->save();
         }
 
@@ -203,7 +183,7 @@ class RelasiController extends Controller
         foreach ($current_gejala_ids as $current_gejala_id) {
             if (!in_array($current_gejala_id, $gejala_ids)) {
                 // Delete the corresponding Relasi row
-                Relasi::where('gejala_id', $current_gejala_id)->where('penyakit_id', $penyakit_id)->delete();
+                Relasi::where('kode_gejala', $current_gejala_id)->where('kode_penyakit', $penyakit_id)->delete();
             }
         }
 

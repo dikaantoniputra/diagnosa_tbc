@@ -60,6 +60,17 @@
                                                     data-parsley-required-message="Nama gejala tidak boleh kosong">
                                             </div>
                                         </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label for="nilai_densitas" class="col-sm-4 col-form-label">Nilai Densitas
+                                                </label>
+                                                <input type="text" class="form-control" id="nilai_densitas"
+                                                    name="nilai_densitas" value="{{ $isi->nilai_densitas }}"
+                                                    placeholder="Nilai Densitas" data-parsley-required="true"
+                                                    data-parsley-required-message="Nilai Densitas tidak boleh kosong"
+                                                    step="0.1">
+                                            </div>
+                                        </div>
                                         <input type="hidden" name="id" id="id" value="{{ $isi->id }}">
 
                                         <div class="col-12 d-flex justify-content-end">

@@ -57,7 +57,7 @@ class GejalaController extends Controller
         $this->validate($request, [
             'kode_gejala' => 'required|string|unique:gejalas,kode_gejala',
             'nama_gejala' => 'required|string',
-            'gejala_penting' => 'required',
+            'nilai_densitas' => 'required'
         ], [
             'kode_gejala.unique' => 'Kode gejala sudah digunakan!',
         ]);
@@ -65,7 +65,7 @@ class GejalaController extends Controller
         $gejala = Gejala::create([
             'kode_gejala' => $request->kode_gejala,
             'nama_gejala' => $request->nama_gejala,
-            'penting' => $request->gejala_penting,
+            'nilai_densitas' => $request->nilai_densitas,
         ]);
 
 
@@ -131,6 +131,7 @@ class GejalaController extends Controller
         $gejala->update([
             'kode_gejala' => $request->kode_gejala,
             'nama_gejala' => $request->nama_gejala,
+            'nilai_densitas' => $request->nilai_densitas,
         ]);
 
 

@@ -15,7 +15,7 @@ class TKController extends Controller
     public function index()
     {
         $data = [
-            'title' => 'Tumbuh Kembang',
+            'title' => 'Penyakit',
             'subtitle' => 'Halaman yang berisikan daftar data Kategori Penyakit',
             'isi' => TKModel::all(),
         ];

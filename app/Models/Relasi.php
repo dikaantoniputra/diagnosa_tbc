@@ -11,15 +11,16 @@ class Relasi extends Model
     use HasFactory;
 
     protected $table = 'relasis';
-    protected $fillable = ['gejala_id', 'penyakit_id'];
+    protected $fillable = ['kode_gejala', 'kode_penyakit'];
+    
 
     public function dataPenyakit()
     {
-        return $this->belongsTo(TKModel::class, 'relasis', 'id', 'penyakit_id');
+        return $this->belongsTo(TKModel::class, 'relasis', 'kode', 'kode_penyakit');
     }
     public function dataGejala()
     {
-        return $this->belongsToMany(Gejala::class,'relasis', 'id', 'gejala_id',);
+        return $this->belongsToMany(Gejala::class,'relasis', 'kode_gejala', 'kode_gejala',);
     }
 
     public function penyakit()
@@ -28,6 +29,6 @@ class Relasi extends Model
     }
     public function gejala()
     {
-        return $this->belongsTo(Gejala::class, 'gejala_id');
+        return $this->belongsTo(Gejala::class, 'kode_gejala');
     }
 }

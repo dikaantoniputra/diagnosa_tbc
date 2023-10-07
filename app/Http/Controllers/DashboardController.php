@@ -25,7 +25,7 @@ class DashboardController extends Controller
         $penyakit = TKModel::all();
         $user = User::all();
 
-        $used_ids = Relasi::pluck('penyakit_id')->toArray();
+        $used_ids = Relasi::pluck('kode_penyakit')->toArray();
         $penyakits = TKModel::whereIn('id', $used_ids)->get();
         
 

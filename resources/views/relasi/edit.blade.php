@@ -61,8 +61,8 @@
                                                 multiple="multiple">
                                                 <option value="">Pilih Gejala</option>
                                                 @foreach ($gejala as $g)
-                                                    <option value="{{ $g->id }}"
-                                                        {{ in_array($g->id, $gejalaIDs) ? 'selected' : '' }}>
+                                                    <option value="{{ $g->kode_gejala }}"
+                                                        {{ in_array($g->kode_gejala, $gejalaIDs) ? 'selected' : '' }}>
                                                         {{ $g->kode_gejala }} - {{ $g->nama_gejala }}
                                                     </option>
                                                 @endforeach
@@ -90,7 +90,7 @@
 @endsection
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @if (session()->has('success'))
         <script>
             Swal.fire({

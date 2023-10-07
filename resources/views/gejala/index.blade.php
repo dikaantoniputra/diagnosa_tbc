@@ -53,7 +53,7 @@
                             <div>
                                 <h5 class="modal-title text-center">Input Gejala</h5>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body ml-2">
                                 <form action="{{ route('gejala.store') }}" method="POST">
                                     @csrf
                                     <div class="mb-3 row mt-3">
@@ -77,6 +77,17 @@
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
+                                        <label for="nilai_densitas" class="col-sm-4 col-form-label">Nilai Densitas</label>
+                                        <div class="col-sm-4">
+                                            <input type="number" class="form-control" id="nilai_densitas"
+                                                name="nilai_densitas" value="{{ old('nilai_densitas') }}"
+                                                placeholder="Nilai Densitas" step="0.01">
+                                            @error('nilai_densitas')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    {{-- <div class="mb-3 row">
                                         <label for="gejala_penting" class="col-sm-2 col-form-label">Gejala Penting</label>
                                         <div class="col-sm-10">
                                             <div class="form-check">
@@ -99,7 +110,7 @@
                                                 <div class="alert alert-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                             </div>
                             <div class="modal-footer">
@@ -107,8 +118,7 @@
                                     <i class="bx bx-x d-block d-sm-none"></i>
                                     <span class="d-none d-sm-block">Tutup</span>
                                 </button>
-                                <button id="success" type="submit" class="btn btn-primary ml-1"
-                                    data-bs-dismiss="modal">
+                                <button id="success" type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">
                                     <i class="bx bx-check d-block d-sm-none"></i>
                                     <span class="d-none d-sm-block">Simpan</span>
                                 </button>
@@ -122,9 +132,10 @@
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
-                                <th class="text-center">KD-Gejala</th>
+                                <th class="text-center">Kode Gejala</th>
                                 <th class="text-center">Gejala</th>
-                                <th class="text-center">Aksi</th>
+                                {{-- <th class="text-center">Aksi</th> --}}
+                                <th class="text-center">Nilai Densitas</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -133,6 +144,7 @@
                                     <td class="text-center">{{ $item->id }}</td>
                                     <td class="text-center">{{ $item->kode_gejala }}</td>
                                     <td class="text-center">{{ $item->nama_gejala }}</td>
+                                    <td class="text-center">{{ $item->nilai_densitas }}</td>
                                     <td class="d-flex justify-content-around">
                                         <dl class="dt ma0 pa0 text-center">
                                             <dt class="the-icon">

@@ -14,8 +14,8 @@ class NodeSeeder extends Seeder
      */
     public function run()
     {
-        $sql = file_get_contents(database_path('seeds/nodes.sql'));
+        //$sql = file_get_contents(database_path('seeds/nodes.sql'));
 
-        DB::unprepared($sql);
+        //DB::unprepared($sql);
     }
 }

@@ -120,7 +120,7 @@
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
-                                <th class="text-center">KD-TK</th>
+                                <th class="text-center">Kode Penyakit</th>
                                 <th class="text-center">Definisi</th>
                                 <th class="text-center">Solusi Pencegahan</th>
                                 <th class="text-center">Aksi</th>

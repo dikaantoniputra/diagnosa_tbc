@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class TKModel extends Model
 {
     use HasFactory;
@@ -13,17 +14,17 @@ class TKModel extends Model
 
     public function gejala()
     {
-        return $this->belongsToMany(Gejala::class, 'relasis', 'penyakit_id', 'gejala_id');
+        return $this->belongsToMany(Gejala::class, 'relasis', 'kode_penyakit', 'kode_gejala');
     }
 
     public function related_penyakit()
 {
-    return $this->belongsToMany(TKModel::class, 'relasis', 'penyakit_id', 'related_penyakit_id');
+    return $this->belongsToMany(TKModel::class, 'relasis', 'kode_penyakit', 'kode_penyakit_id');
 }
 
     public function relasi()
     {
-        return $this->hasMany(Relasi::class, 'penyakit_id', 'id');
+        return $this->hasMany(Relasi::class, 'kode_penyakit', 'kode');
     }
 
     public function relasis()
