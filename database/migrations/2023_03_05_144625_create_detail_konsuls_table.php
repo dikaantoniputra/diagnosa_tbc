@@ -15,8 +15,8 @@ class CreateDetailKonsulsTable extends Migration
     {
         Schema::create('detail_konsuls', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('gejala_id');
-            $table->foreign('gejala_id')->references('id')->on('gejalas')->cascadeOnDelete();
+            $table->char(('gejala_id'),8);
+            $table->foreign('gejala_id')->references('kode_gejala')->on('gejalas')->cascadeOnDelete();
             $table->unsignedBigInteger('konsul_id');
             $table->foreign('konsul_id')->references('id')->on('konsuls')->cascadeOnDelete();
             $table->timestamps();

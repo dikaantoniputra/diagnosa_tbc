@@ -13,7 +13,7 @@ class DetailKonsul extends Model
 
     public function dataGejala()
     {
-        return $this->belongsTo(Gejala::class, 'gejala_id', 'id');
+        return $this->belongsTo(Gejala::class, 'kode_gejala', 'kode_gejala');
     }
     public function dataKonsul()
     {

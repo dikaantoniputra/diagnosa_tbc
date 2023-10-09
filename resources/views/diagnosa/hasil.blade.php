@@ -43,9 +43,9 @@
                                 disabled="disabled">
                         </div>
                         <input type="text" name="nama_pasien" id="nama_pasien" value="{{ $pasien }}" hidden>
-                      
+
                         <input type="hidden" name="penyakit_id" id="penyakit_id" value="{{ $hasil['kode'] }}">
-                    
+
 
                         <div class="card-body" hidden>
                             <div class="row justify-content-center">
@@ -85,20 +85,22 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">KD-Penyakit</th>
-                                        <th class="text-center">Definisi</th>
+                                        <th class="text-center">Kode Penyakit</th>
+                                        <th class="text-center">Nama Penyakit</th>
+                                        <th class="text-center">Solusi Pencegahan</th>
                                         <th class="text-center">Persentase dan Nilai Kepercayaan</th>
                                     </tr>
                                 </thead>
                                 <tbody style="height: 100px">
-                                   
-                                        <tr>
-                                            <td class="align-top text-center">{{ $hasil['kode'] }} -
-                                                {{ $hasil['nama_penyakit'] }}</td>
-                                            <td class="align-top text-center">{{ $hasil['nilai_belief'] }}</td>
-                                            <td class="align-top text-center">{{ $hasil['persentase_penyakit'] }}</td>
-                                            <td class="align-top text-center"></td>
-                                        </tr>
+
+                                    <tr>
+                                        <td class="align-top text-center">{{ $hasil['kode'] }}
+                                        </td>
+                                        <td class="align-top text-center"> {{ $hasil['nama_penyakit'] }} </td>
+                                        <td class="align-top text-center">{{ $hasil['solusi'] }}</td>
+                                        <td class="align-top text-center">
+                                            {{ $hasil['persentase_penyakit'] }} / ( {{ $hasil['nilai_belief'] }} )</td>
+                                    </tr>
                                 </tbody>
                             </table>
                             <ul>

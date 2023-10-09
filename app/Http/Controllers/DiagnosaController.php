@@ -42,37 +42,6 @@ class DiagnosaController extends Controller
         //
     }
 
-
-    // DFS function to find diseases based on symptoms
-    private function dfsDiagnosis($gejala_id, $visited, &$result, &$gejala_importance)
-    {
-        $visited[$gejala_id] = true;
-
-        // Find the diseases associated with the current symptom
-        $relasi = Relasi::where('kode_gejala', $gejala_id)->get();
-
-        foreach ($relasi as $r) {
-            $penyakit_id = $r->penyakit_id;
-            if (!isset($result[$penyakit_id])) {
-                $result[$penyakit_id] = [
-                    'penyakit' => TKModel::find($penyakit_id)->toArray(),
-                    'count' => 0,
-                    'penting' => 0,
-                ];
-            }
-            $result[$penyakit_id]['count']++;
-            $result[$penyakit_id]['penting'] += $gejala_importance[$gejala_id];
-        }
-
-        // Recursively visit all connected symptoms
-        foreach ($relasi as $r) {
-            $next_gejala_id = $r->gejala_id;
-            if (!$visited[$next_gejala_id]) {
-                $this->dfsDiagnosis($next_gejala_id, $visited, $result, $gejala_importance);
-            }
-        }
-    }
-
     public function hasil(Request $request)
     {
         $validateReq = $request->validate([
@@ -114,13 +83,15 @@ class DiagnosaController extends Controller
                     $variabelTampilan['Gejala_Penyakit'][$key]['nama_gejala'] = $value;
                 }
 
-                
+
                 $diagnosaSavedData = [
                     'kode' => $variabelTampilan['kode'],
                     'nama_penyakit' => $variabelTampilan['Nama_Penyakit']['nama_penyakit'],
                     'nilai_belief' => $variabelTampilan['Nilai_Belief_Penyakit'],
                     'persentase_penyakit' => $variabelTampilan['Persentase_Penyakit'],
-                    'gejala_penyakit' => $variabelTampilan['Gejala_Penyakit']
+                    'gejala_penyakit' => $variabelTampilan['Gejala_Penyakit'],
+                    'solusi' => $variabelTampilan['Solusi_Penyakit']['solusi'],
+                    'definisi' => $variabelTampilan['definisi']
                 ];
 
                 $hasildata = [];
@@ -135,8 +106,6 @@ class DiagnosaController extends Controller
                     'gejala' => $request->input('gejala'),
                     'hasil' => $hasildata,
                 ];
-                //iki dik 
-                // dd($data);
         
                 return view('diagnosa/hasil', $data)->with('success', 'Penyakit berhasil ditemukan!');
             }
@@ -179,6 +148,10 @@ class DiagnosaController extends Controller
         $dataSolusi = TKModel::where('kode', $kodePenyakit)
             ->select('solusi')
             ->get()
+            ->toArray()[0];            
+        $datadefinisi = TKModel::where('kode', $kodePenyakit)
+            ->select('definisi')
+            ->get()
             ->toArray()[0];
 
         $jsonData = [
@@ -186,6 +159,7 @@ class DiagnosaController extends Controller
             'Nama_Penyakit' => $dataPenyakit,
             'Nilai_Belief_Penyakit' => $nilaiBelief,
             'Persentase_Penyakit' => $persentase,
+            'definisi' => $datadefinisi,
             'Solusi_Penyakit' => $dataSolusi,
         ];
 
@@ -294,9 +268,8 @@ class DiagnosaController extends Controller
     public function store(Request $request)
     {
 
-        // dd($request);
-        $id = implode(',', $request->penyakit_id);
-        // dd($id);
+        $id = $request->penyakit_id;
+
         $diagnosa = Diagnosa::create([
             'nama_pasien' => $request->nama_pasien,
             'tLahir' => $request->tLahir,
@@ -328,8 +301,8 @@ class DiagnosaController extends Controller
 
     public function showDiagnosa()
     {
-        $used_ids = Relasi::pluck('penyakit_id')->toArray();
-        $penyakits = TKModel::whereIn('id', $used_ids)->get();
+        $used_ids = Relasi::pluck('kode_penyakit')->toArray();
+        $penyakits = TKModel::whereIn('kode', $used_ids)->get();
 
         $username = Auth::user()->username;
         if (Auth()->user()->role == 0) {
@@ -344,7 +317,7 @@ class DiagnosaController extends Controller
 
         $penyakitData = null;
         foreach ($diagnosa as $key => $d) {
-            $penyakitData = TKModel::where('id', $d->penyakit_id)->get();
+            $penyakitData = TKModel::where('kode', $d->penyakit_id)->get();
         }
 
 

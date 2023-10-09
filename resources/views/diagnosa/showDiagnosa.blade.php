@@ -38,7 +38,7 @@
                                         $penyakit_ids = array_merge($penyakit_ids, explode(',', $penyakit));
                                     @endphp
                                     <td class="text-center" style="max-width: 200px">
-                                        @foreach (\App\Models\TKModel::whereIn('id', $penyakit_ids)->get() as $penyakit)
+                                        @foreach (\App\Models\TKModel::whereIn('kode', $penyakit_ids)->get() as $penyakit)
                                             @if ($loop->iteration != 1)
                                                 ,
                                             @endif
@@ -82,22 +82,20 @@
 @endsection
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    @if (session()->has('success'))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil',
-                text: '{{ session('success') }}',
-            })
-
-        </script>
-    @elseif ($errors->any())
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Gagal',
-                text: 'Data gagal disimpan!',
-            })
-
-        </script>
-    @endif
+@if (session()->has('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: '{{ session('success') }}',
+        })
+    </script>
+@elseif ($errors->any())
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal',
+            text: 'Data gagal disimpan!',
+        })
+    </script>
+@endif
