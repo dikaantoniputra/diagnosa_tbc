@@ -80,9 +80,10 @@
             <h6><u>Gejala Pasien:</u></h6>
             <ol class="ms-4">
                 @foreach ($detail as $gejala)
-                    <li @if ($gejala->dataGejala->penting == 1) class="fw-semibold text-primary" @else class:"ma-0" @endif>
+                    <li class="fw-semibold text-primary"> {{ $gejala->dataGejala->nama_gejala }} </li>
+                    {{-- <li @if ($gejala->dataGejala->penting == 1) class="fw-semibold text-primary" @else class:"ma-0" @endif>
                         {{ $gejala->dataGejala->nama_gejala }}{{$gejala->dataGejala->penting == 1 ? '*' : ''}}
-                    </li>
+                    </li> --}}
                 @endforeach
             </ol>
         </div>

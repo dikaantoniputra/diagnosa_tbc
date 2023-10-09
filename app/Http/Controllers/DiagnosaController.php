@@ -356,7 +356,7 @@ class DiagnosaController extends Controller
         $penyakit_array = array_merge($penyakit_array, explode(',', $penyakit));
         $penyakit_data = [];
         foreach ($penyakit_array as $key => $value) {
-            $penyakit = TKModel::where('id', $value)->first();
+            $penyakit = TKModel::where('kode', $value)->first();
             $penyakit_data[] = $penyakit;
         }
 
@@ -373,8 +373,6 @@ class DiagnosaController extends Controller
             'penyakit' => $penyakit_data,
             'tanggal_cetak' => Carbon::now()->format('Y-m-d H:i'),
         ];
-
-        // dd($data);
 
         return view('diagnosa.laporan', $data);
     }
