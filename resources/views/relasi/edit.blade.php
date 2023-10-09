@@ -34,10 +34,22 @@
                         </div>
                         <div class="card-content">
                             <div class="card-body">
-                                <form class="form" action="{{ route('relasi.update', $penyakitId) }}" method="POST">
+                                <form class="form" action="{{ route('relasi.update', $kode_relasi) }}" method="POST">
                                     @csrf
                                     @method('PUT')
                                     <div class="row">
+                                        <div class="mb-4 row mt-3">
+                                            <label for="kode_relasi" class="col-sm-2 col-form-label">Kode</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="kode_relasi"
+                                                    name="kode_relasi" placeholder="Kode Relasi" value="{{ $kode_relasi }}"
+                                                    data-parsley-required="true"
+                                                    data-parsley-required-message="Kode relasi tidak boleh kosong">
+                                                @error('kode_relasi')
+                                                    <div class="alert alert-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
                                         <div class="col-md-4 mb-4">
                                             <p>Nama Kategori Penyakit</p>
                                         </div>
@@ -46,15 +58,15 @@
                                                 {{-- <option value="{{ $penyakit->id }}" {{ $penyakit->id ? 'selected' : '' }}>
                                                     {{ $penyakit->kode }} - {{ $penyakit->nama_penyakit }}</option> --}}
                                                 @foreach ($penyakit as $p)
-                                                    <option value="{{ $p->id }}"
-                                                        {{ $p->id == $penyakitId ? 'selected' : '' }}>
+                                                    <option value="{{ $p->kode }}"
+                                                        {{ $p->kode == $penyakitId ? 'selected' : '' }}>
                                                         {{ $p->kode }} - {{ $p->nama_penyakit }}
                                                     </option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <div class="col-md-4 mb-4">
-                                            <label for="kode" class="col-sm-2 col-form-label">Gejala</label>
+                                            <label for="kode" class="col-sm col-form-label">Gejala</label>
                                         </div>
                                         <div class="col-md-8 mb-4">
                                             <select class="choices form-select multiple-remove" name="relasi_gejala[]"

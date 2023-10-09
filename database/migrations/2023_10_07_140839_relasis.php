@@ -16,6 +16,7 @@ class Relasis extends Migration
         //
         Schema::create('relasis', function (Blueprint $table) {
             $table->id();
+            $table->char('kode_relasi',8);
             $table->char('kode_gejala',8);
             $table->char('kode_penyakit',8);
             $table->timestamps();

@@ -19,7 +19,7 @@ class TKModel extends Model
 
     public function related_penyakit()
 {
-    return $this->belongsToMany(TKModel::class, 'relasis', 'kode_penyakit', 'kode_penyakit_id');
+    return $this->belongsToMany(TKModel::class, 'relasis', 'kode_penyakit', 'related_penyakit_id');
 }
 
     public function relasi()

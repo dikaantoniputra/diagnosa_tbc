@@ -48,6 +48,16 @@
                                 @csrf
                                 <div class="modal-body">
 
+                                    <div class="mb-3 row mt-3">
+                                        <label for="kode_relasi" class="col-sm-2 col-form-label">Kode</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="kode_relasi" name="kode_relasi"
+                                                placeholder="Kode Relasi" value="{{ old('kode_relasi') }}">
+                                            @error('kode_relasi')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
                                     <div class="mb-3 mt-3">
                                         <p>Nama Kategori Penyakit</p>
                                         <select class="choices form-select" name="relasi_penyakit">
@@ -93,6 +103,7 @@
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
+                                <th class="text-center">Kode Relasi</th>
                                 <th class="text-center">KD-Nama Penyakit</th>
                                 <th class="text-center">Gejala</th>
                                 <th class="text-center">Aksi</th>
@@ -102,6 +113,7 @@
                             @foreach ($data as $key => $d)
                                 <tr>
                                     <td class="text-center">{{ $key + 1 }}</td>
+                                    <td class="text-center">{{ $d['kode_relasi'] }}</td>
                                     <td class="text-center" style="width: 300px">{{ $d['kode'] }} -
                                         {{ $d['nama_penyakit'] }}</td>
                                     <td class="">
@@ -113,7 +125,7 @@
                                     <td>
                                         <dl class="dt ma0 pa0 text-center">
                                             <dt class="the-icon">
-                                                <a href="/relasi/{{ $d['id'] }}/edit" class="btn btn-sm">
+                                                <a href="/relasi/{{ $d['kode_relasi'] }}/edit" class="btn btn-sm">
                                                     <span class="fa-fw select-all fas"></span>
                                                 </a>
                                             </dt>
@@ -122,7 +134,8 @@
                                         </dl>
                                         <dl class="dt ma0 pa0 text-center">
                                             <dt class="the-icon">
-                                                <form method="POST" action="{{ route('relasi.destroy', $d['id']) }}">
+                                                <form method="POST"
+                                                    action="{{ route('relasi.destroy', $d['kode_relasi']) }}">
                                                     @csrf
                                                     @method('delete')
                                                     <button type="submit" class="btn btn-sm">

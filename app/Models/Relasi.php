@@ -11,7 +11,7 @@ class Relasi extends Model
     use HasFactory;
 
     protected $table = 'relasis';
-    protected $fillable = ['kode_gejala', 'kode_penyakit'];
+    protected $fillable = ['kode_relasi','kode_gejala', 'kode_penyakit'];
     
 
     public function dataPenyakit()

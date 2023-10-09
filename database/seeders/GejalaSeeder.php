@@ -20,9 +20,9 @@ class GejalaSeeder extends Seeder
             [
                 'kode_gejala' => 'G01',
                 'nama_gejala' => 'Batuk terlalu lama',
-                'penting' => false,
-                'created_at' => new \DateTime,
-                'updated_at' => null,
+                'nilai_densitas' => 0.9,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
             [
                 'kode_gejala' => 'G02',
