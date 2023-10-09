@@ -94,12 +94,13 @@
                                                                     class="widget-todo-title-area d-flex align-items-center">
                                                                     <div class="checkbox checkbox-shadow">
                                                                         <input type="checkbox" class="form-check-input"
-                                                                            name="gejala[]" value="{{ $gejala->id }}"
+                                                                            name="gejala[]"
+                                                                            value="{{ $gejala->kode_gejala }}"
                                                                             id="gejala">
                                                                         <label for="gejala"></label>
                                                                     </div>
                                                                     <span
-                                                                        class="widget-todo-title ml-50">{{ $gejala->id }}
+                                                                        class="widget-todo-title ml-50">{{ $gejala->kode_gejala }}
                                                                         -
                                                                         {{ $gejala->nama_gejala }}</span>
                                                                 </div>

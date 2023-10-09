@@ -43,9 +43,9 @@
                                 disabled="disabled">
                         </div>
                         <input type="text" name="nama_pasien" id="nama_pasien" value="{{ $pasien }}" hidden>
-                        @foreach ($hasil as $item)
-                            <input type="hidden" name="penyakit_id[]" id="penyakit_id" value="{{ $item['id'] }}">
-                        @endforeach
+                        {{-- @foreach ($hasil as $item) --}}
+                        {{-- <input type="hidden" name="penyakit_id[]" id="penyakit_id" value="{{ $item['id'] }}"> --}}
+                        {{-- @endforeach --}}
 
                         <div class="card-body" hidden>
                             <div class="row justify-content-center">
@@ -88,6 +88,7 @@
                                         <th class="text-center">KD-Tumbuh Kembang</th>
                                         <th class="text-center">Definisi</th>
                                         <th class="text-center">Solusi Pencegahan</th>
+                                        <th class="text-center">Persentase dan Nilai Kepercayaan</th>
                                     </tr>
                                 </thead>
                                 <tbody style="height: 300px">
@@ -97,6 +98,7 @@
                                                 {{ $item['nama_penyakit'] }}</td>
                                             <td class="align-top text-center">{{ $item['definisi'] }}</td>
                                             <td class="align-top text-center">{{ $item['solusi'] }}</td>
+                                            <td class="align-top text-center"></td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -121,7 +123,7 @@
 @endsection
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @if (session())
         <script>
             Swal.fire({
@@ -129,7 +131,6 @@
                 title: 'Berhasil',
                 text: 'Gangguan Kategori Penyakit ditemukan!',
             })
-
         </script>
     @elseif ($errors->any())
         <script>
@@ -138,7 +139,6 @@
                 title: 'Gagal',
                 text: '{{ session('error') }}',
             })
-
         </script>
     @endif
 

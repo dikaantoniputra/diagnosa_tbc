@@ -49,7 +49,7 @@ class DiagnosaController extends Controller
         $visited[$gejala_id] = true;
 
         // Find the diseases associated with the current symptom
-        $relasi = Relasi::where('gejala_id', $gejala_id)->get();
+        $relasi = Relasi::where('kode_gejala', $gejala_id)->get();
 
         foreach ($relasi as $r) {
             $penyakit_id = $r->penyakit_id;
@@ -75,59 +75,117 @@ class DiagnosaController extends Controller
 
     public function hasil(Request $request)
     {
-        $diagnosa = $this->validate($request, [
+        $validateReq = $request->validate([
             'nama_pasien' => 'required|string',
             'tLahir' => 'required',
             'alamat' => 'required|string',
             'telp' => 'required|numeric',
         ]);
 
-        // Ambil semua data relasi gejala dan penyakit
-        $gejala_input = $request->input('gejala');
+        $arrHasilUser = $request->input('gejala');
+
+        if ($arrHasilUser == null) {
+            return back()->withInput()->with('error', 'Anda belum memilih gejala');
+        } else {
+            if (count($arrHasilUser) < TkModel::count() + 1) {
+                return back()->withInput()->with('error', 'Minimal gejala yang dipilih adalah ' . (TkModel::count() + 1) . ' gejala');
+            } else {
+                foreach ($arrHasilUser as $key => $value) {
+                    $dataPenyakit[$key] = Relasi::where('kode_gejala', $value)
+                        ->select('kode_penyakit')
+                        ->get()
+                        ->toArray();
+                    foreach ($dataPenyakit[$key] as $a => $b) {
+                        $resultData[$key]['daftar_penyakit'][$a] = $b['kode_penyakit'];
+                    }
+                    $dataNilaiDensitas[$key] = Gejala::where('kode_gejala', $value)
+                        ->select('nilai_densitas', 'nama_gejala')
+                        ->get()
+                        ->toArray();
+                    $dataGejala[$key] = $dataNilaiDensitas[$key][0]['nama_gejala'];
+                    $resultData[$key]['belief'] = $dataNilaiDensitas[$key][0]['nilai_densitas'];
+                    $resultData[$key]['plausibility'] = 1 - $dataNilaiDensitas[$key][0]['nilai_densitas'];
+                }
+
+                $variabelTampilan = $this->mulaiPerhitungan($resultData);
+
+                foreach ($dataGejala as $key => $value) {
+                    $variabelTampilan['Gejala_Penyakit'][$key]['kode_gejala'] = $arrHasilUser[$key];
+                    $variabelTampilan['Gejala_Penyakit'][$key]['nama_gejala'] = $value;
+                }
+
+                
+                $diagnosaSavedData = [
+                    'kode' => $variabelTampilan['kode'],
+                    'nama_penyakit' => $variabelTampilan['Nama_Penyakit']['nama_penyakit'],
+                    'nilai_belief' => $variabelTampilan['Nilai_Belief_Penyakit'],
+                    'persentase_penyakit' => $variabelTampilan['Persentase_Penyakit'],
+                    'gejala_penyakit' => $variabelTampilan['Gejala_Penyakit']
+                ];
+
+                $hasildata = [];
+                $hasildata = $diagnosaSavedData;
+                
+                $data = [
+                    'title' => 'Hasil Diagnosa',
+                    'pasien' => $request->input('nama_pasien'),
+                    'telp' => $request->input('telp'),
+                    'tLahir' => $request->input('tLahir'),
+                    'alamat' => $request->input('alamat'),
+                    'gejala' => $request->input('gejala'),
+                    'hasil' => $hasildata,
+                ];
+                //iki dik 
+                dd($data);
         
-        $gejala_ids = Gejala::whereIn('id', $gejala_input)->pluck('id')->toArray();
-        $penyakit = TKModel::all();
-
-        // Calculate the importance count of each symptom
-        $gejala_importance = array_fill_keys($gejala_ids, 0);
-        foreach ($gejala_ids as $gejala_id) {
-            
-            // Here, you can define the method to calculate the importance count
-            // For example, you might have a table to store the importance score of each symptom
-            // Replace 'importance' with the correct field name in your setup
-            $gejala_importance[$gejala_id] = Gejala::find($gejala_id)->penting;
-        }
-
-        // Perform DFS to find diseases based on symptoms
-        $visited = array_fill_keys($gejala_ids, false);
-        $hasil = [];
-        foreach ($gejala_ids as $gejala_id) {
-            $this->dfsDiagnosis($gejala_id, $visited, $hasil, $gejala_importance);
-        }
-
-        // Sort the diseases based on both symptom count and symptom importance
-        usort($hasil, function ($a, $b) {
-            if ($a['penting'] !== $b['penting']) {
-                return $b['penting'] - $a['penting'];
+                return view('diagnosa/hasil', $data)->with('success', 'Penyakit berhasil ditemukan!');
             }
-            return $b['count'] - $a['count'];
-        });
+        }
 
-        $penyakit_hasil = array_column($hasil, 'penyakit');
+        // // Ambil semua data relasi gejala dan penyakit
+        // $gejala_input = $request->input('gejala');
 
-        $data = [
-            'title' => 'Hasil Diagnosa',
-            'pasien' => $request->input('nama_pasien'),
-            'telp' => $request->input('telp'),
-            'tLahir' => $request->input('tLahir'),
-            'alamat' => $request->input('alamat'),
-            'gejala' => $request->input('gejala'),
-            'hasil' => $penyakit_hasil,
-        ];
+        // $gejala_ids = Gejala::whereIn('kode_gejala', $gejala_input)->pluck('kode_gejala')->toArray();
+        // $penyakit = TKModel::all();
 
-        // dd($data);
+        // // Calculate the importance count of each symptom
+        // $gejala_importance = array_fill_keys($gejala_ids, 0);
+        // foreach ($gejala_ids as $gejala_id) {
+            
+        //     // Here, you can define the method to calculate the importance count
+        //     // For example, you might have a table to store the importance score of each symptom
+        //     // Replace 'importance' with the correct field name in your setup
+        //     $gejala_importance[$gejala_id] = Gejala::find($gejala_id)->penting;
+        // }
 
-        return view('diagnosa/hasil', $data)->with('success', 'Penyakit berhasil ditemukan!');
+        // // Perform DFS to find diseases based on symptoms
+        // $visited = array_fill_keys($gejala_ids, false);
+        // $hasil = [];
+        // foreach ($gejala_ids as $gejala_id) {
+        //     $this->dfsDiagnosis($gejala_id, $visited, $hasil, $gejala_importance);
+        // }
+
+        // // Sort the diseases based on both symptom count and symptom importance
+        // usort($hasil, function ($a, $b) {
+        //     if ($a['penting'] !== $b['penting']) {
+        //         return $b['penting'] - $a['penting'];
+        //     }
+        //     return $b['count'] - $a['count'];
+        // });
+
+        // $penyakit_hasil = array_column($hasil, 'penyakit');
+
+        // $data = [
+        //     'title' => 'Hasil Diagnosa',
+        //     'pasien' => $request->input('nama_pasien'),
+        //     'telp' => $request->input('telp'),
+        //     'tLahir' => $request->input('tLahir'),
+        //     'alamat' => $request->input('alamat'),
+        //     'gejala' => $request->input('gejala'),
+        //     'hasil' => $penyakit_hasil,
+        // ];
+
+        // return view('diagnosa/hasil', $data)->with('success', 'Penyakit berhasil ditemukan!');
         
     }
 
@@ -160,16 +218,17 @@ class DiagnosaController extends Controller
         $persentase = (round($result['data'][$indexMaxValue]['value'], 2) * 100) . " %";
 
         $kodePenyakit = $result['data'][$indexMaxValue]['array'][0];
-        $dataPenyakit = Penyakit::where('kode_penyakit', $kodePenyakit)
+        $dataPenyakit = TKModel::where('kode', $kodePenyakit)
             ->select('nama_penyakit')
             ->get()
             ->toArray()[0];
-        $dataSolusi = Penyakit::where('kode_penyakit', $kodePenyakit)
+        $dataSolusi = TKModel::where('kode', $kodePenyakit)
             ->select('solusi')
             ->get()
             ->toArray()[0];
 
         $jsonData = [
+            'kode' => $kodePenyakit,
             'Nama_Penyakit' => $dataPenyakit,
             'Nilai_Belief_Penyakit' => $nilaiBelief,
             'Persentase_Penyakit' => $persentase,
