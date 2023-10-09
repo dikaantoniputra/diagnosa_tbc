@@ -136,57 +136,11 @@ class DiagnosaController extends Controller
                     'hasil' => $hasildata,
                 ];
                 //iki dik 
-                dd($data);
+                // dd($data);
         
                 return view('diagnosa/hasil', $data)->with('success', 'Penyakit berhasil ditemukan!');
             }
-        }
-
-        // // Ambil semua data relasi gejala dan penyakit
-        // $gejala_input = $request->input('gejala');
-
-        // $gejala_ids = Gejala::whereIn('kode_gejala', $gejala_input)->pluck('kode_gejala')->toArray();
-        // $penyakit = TKModel::all();
-
-        // // Calculate the importance count of each symptom
-        // $gejala_importance = array_fill_keys($gejala_ids, 0);
-        // foreach ($gejala_ids as $gejala_id) {
-            
-        //     // Here, you can define the method to calculate the importance count
-        //     // For example, you might have a table to store the importance score of each symptom
-        //     // Replace 'importance' with the correct field name in your setup
-        //     $gejala_importance[$gejala_id] = Gejala::find($gejala_id)->penting;
-        // }
-
-        // // Perform DFS to find diseases based on symptoms
-        // $visited = array_fill_keys($gejala_ids, false);
-        // $hasil = [];
-        // foreach ($gejala_ids as $gejala_id) {
-        //     $this->dfsDiagnosis($gejala_id, $visited, $hasil, $gejala_importance);
-        // }
-
-        // // Sort the diseases based on both symptom count and symptom importance
-        // usort($hasil, function ($a, $b) {
-        //     if ($a['penting'] !== $b['penting']) {
-        //         return $b['penting'] - $a['penting'];
-        //     }
-        //     return $b['count'] - $a['count'];
-        // });
-
-        // $penyakit_hasil = array_column($hasil, 'penyakit');
-
-        // $data = [
-        //     'title' => 'Hasil Diagnosa',
-        //     'pasien' => $request->input('nama_pasien'),
-        //     'telp' => $request->input('telp'),
-        //     'tLahir' => $request->input('tLahir'),
-        //     'alamat' => $request->input('alamat'),
-        //     'gejala' => $request->input('gejala'),
-        //     'hasil' => $penyakit_hasil,
-        // ];
-
-        // return view('diagnosa/hasil', $data)->with('success', 'Penyakit berhasil ditemukan!');
-        
+        }       
     }
 
     //Menyimpan Nilai Densitas (Belief)
@@ -416,12 +370,7 @@ class DiagnosaController extends Controller
         return view('diagnosa.showDiagnosa', $data);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Diagnosa  $diagnosa
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         $diagnosa = Diagnosa::find($id);
@@ -457,12 +406,7 @@ class DiagnosaController extends Controller
         return view('diagnosa.laporan', $data);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Diagnosa  $diagnosa
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(Diagnosa $diagnosa)
     {
         //

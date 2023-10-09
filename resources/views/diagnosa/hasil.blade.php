@@ -43,9 +43,9 @@
                                 disabled="disabled">
                         </div>
                         <input type="text" name="nama_pasien" id="nama_pasien" value="{{ $pasien }}" hidden>
-                        {{-- @foreach ($hasil as $item) --}}
-                        {{-- <input type="hidden" name="penyakit_id[]" id="penyakit_id" value="{{ $item['id'] }}"> --}}
-                        {{-- @endforeach --}}
+                      
+                        <input type="hidden" name="penyakit_id" id="penyakit_id" value="{{ $hasil['kode'] }}">
+                    
 
                         <div class="card-body" hidden>
                             <div class="row justify-content-center">
@@ -85,24 +85,30 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">KD-Tumbuh Kembang</th>
+                                        <th class="text-center">KD-Penyakit</th>
                                         <th class="text-center">Definisi</th>
-                                        <th class="text-center">Solusi Pencegahan</th>
                                         <th class="text-center">Persentase dan Nilai Kepercayaan</th>
                                     </tr>
                                 </thead>
-                                <tbody style="height: 300px">
-                                    @foreach ($hasil as $item)
+                                <tbody style="height: 100px">
+                                   
                                         <tr>
-                                            <td class="align-top text-center">{{ $item['kode'] }} -
-                                                {{ $item['nama_penyakit'] }}</td>
-                                            <td class="align-top text-center">{{ $item['definisi'] }}</td>
-                                            <td class="align-top text-center">{{ $item['solusi'] }}</td>
+                                            <td class="align-top text-center">{{ $hasil['kode'] }} -
+                                                {{ $hasil['nama_penyakit'] }}</td>
+                                            <td class="align-top text-center">{{ $hasil['nilai_belief'] }}</td>
+                                            <td class="align-top text-center">{{ $hasil['persentase_penyakit'] }}</td>
                                             <td class="align-top text-center"></td>
                                         </tr>
-                                    @endforeach
                                 </tbody>
                             </table>
+                            <ul>
+                                @foreach ($hasil['gejala_penyakit'] as $gejala_penyakit)
+                                    <li>
+                                        Kode Gejala: {{ $gejala_penyakit['kode_gejala'] }},
+                                        Nama Gejala: {{ $gejala_penyakit['nama_gejala'] }}
+                                    </li>
+                                @endforeach
+                            </ul>
                         @endif
                         <div class="row">
                             <div class="d-flex justify-content-evenly">
